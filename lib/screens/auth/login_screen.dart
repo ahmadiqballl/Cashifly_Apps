@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 240,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primaryPurple.withValues(alpha: 0.22),
+                color: AppColors.primaryPurple.withOpacity(0.22),
               ),
             ),
           ),
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 220,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.neonCyan.withValues(alpha: 0.12),
+                color: AppColors.neonCyan.withOpacity(0.12),
               ),
             ),
           ),
@@ -150,12 +150,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           gradient: AppColors.cardGradient,
                           borderRadius: BorderRadius.circular(24),
                           border: Border.all(
-                            color: AppColors.primaryPurplePastel.withValues(alpha: 0.5),
+                            color: AppColors.primaryPurplePastel.withOpacity(0.5),
                             width: 2,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryPurple.withValues(alpha: 0.4),
+                              color: AppColors.primaryPurple.withOpacity(0.4),
                               blurRadius: 20,
                               offset: const Offset(0, 6),
                             ),
@@ -449,7 +449,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       borderRadius: BorderRadius.circular(14),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.primaryPurple.withValues(alpha: 0.4),
+                                          color: AppColors.primaryPurple.withOpacity(0.4),
                                           blurRadius: 12,
                                           offset: const Offset(0, 4),
                                         ),

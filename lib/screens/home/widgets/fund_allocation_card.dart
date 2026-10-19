@@ -28,7 +28,7 @@ class FundAllocationCard extends StatelessWidget {
         border: Border.all(color: AppColors.surfaceBorder),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withOpacity(0.25),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -46,7 +46,7 @@ class FundAllocationCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryPurple.withValues(alpha: 0.2),
+                      color: AppColors.primaryPurple.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
@@ -156,7 +156,7 @@ class FundAllocationCard extends StatelessWidget {
         color: AppColors.surfaceElevated,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: category.color.withValues(alpha: 0.25),
+          color: category.color.withOpacity(0.25),
         ),
       ),
       child: Row(
@@ -165,7 +165,7 @@ class FundAllocationCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
-              color: category.color.withValues(alpha: 0.15),
+              color: category.color.withOpacity(0.15),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -196,7 +196,7 @@ class FundAllocationCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.amberOrange.withValues(alpha: 0.2),
+                          color: AppColors.amberOrange.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: const Text(

@@ -32,7 +32,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
         border: Border.all(color: AppColors.surfaceBorder),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withOpacity(0.25),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -50,7 +50,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
                   Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      color: AppColors.indigoAccent.withValues(alpha: 0.2),
+                      color: AppColors.indigoAccent.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
@@ -230,7 +230,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
             color: isSelected
-                ? AppColors.primaryPurple.withValues(alpha: 0.25)
+                ? AppColors.primaryPurple.withOpacity(0.25)
                 : AppColors.surfaceElevated,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(

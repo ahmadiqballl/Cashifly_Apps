@@ -27,7 +27,7 @@ class WeeklyChartCard extends StatelessWidget {
         border: Border.all(color: AppColors.surfaceBorder),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
+            color: Colors.black.withOpacity(0.25),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -45,7 +45,7 @@ class WeeklyChartCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
-                      color: AppColors.neonCyan.withValues(alpha: 0.15),
+                      color: AppColors.neonCyan.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
@@ -239,7 +239,7 @@ class WeeklyChartCard extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
             boxShadow: [
               BoxShadow(
-                color: color.withValues(alpha: 0.3),
+                color: color.withOpacity(0.3),
                 blurRadius: 6,
                 offset: const Offset(0, 2),
               ),

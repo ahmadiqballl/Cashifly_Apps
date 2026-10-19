@@ -189,7 +189,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                         prefixIcon: const Icon(Icons.money_rounded, color: AppColors.primaryPurplePastel),
                         hintText: '0',
                         hintStyle: TextStyle(
-                          color: AppColors.textMuted.withValues(alpha: 0.5),
+                          color: AppColors.textMuted.withOpacity(0.5),
                           fontSize: 22,
                         ),
                       ),
@@ -271,7 +271,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryPurple.withValues(alpha: 0.4),
+                              color: AppColors.primaryPurple.withOpacity(0.4),
                               blurRadius: 14,
                               offset: const Offset(0, 4),
                             ),
@@ -336,7 +336,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
                   color: _selectedType == TransactionType.expense
-                      ? AppColors.rosePink.withValues(alpha: 0.25)
+                      ? AppColors.rosePink.withOpacity(0.25)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
@@ -375,7 +375,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
                   color: _selectedType == TransactionType.income
-                      ? AppColors.emeraldGreen.withValues(alpha: 0.25)
+                      ? AppColors.emeraldGreen.withOpacity(0.25)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
@@ -448,7 +448,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? fund.color.withValues(alpha: 0.2)
+                        ? fund.color.withOpacity(0.2)
                         : AppColors.surfaceElevated,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
@@ -510,7 +510,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.primaryPurple.withValues(alpha: 0.25)
+                        ? AppColors.primaryPurple.withOpacity(0.25)
                         : AppColors.surfaceElevated,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
@@ -545,7 +545,9 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
         // Pilihan Nama Bank atau E-Wallet
         if (_selectedAccountType == AccountType.bank) ...[
           DropdownButtonFormField<String>(
-            value: _selectedAccountName,
+            value: AppConstants.availableBanks.contains(_selectedAccountName)
+                ? _selectedAccountName
+                : AppConstants.availableBanks.first,
             dropdownColor: AppColors.surfaceElevated,
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: const InputDecoration(
@@ -578,7 +580,9 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
           ],
         ] else if (_selectedAccountType == AccountType.eWallet) ...[
           DropdownButtonFormField<String>(
-            value: _selectedAccountName,
+            value: AppConstants.availableEWallets.contains(_selectedAccountName)
+                ? _selectedAccountName
+                : AppConstants.availableEWallets.first,
             dropdownColor: AppColors.surfaceElevated,
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: const InputDecoration(

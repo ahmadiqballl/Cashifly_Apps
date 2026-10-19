@@ -188,7 +188,21 @@ class TransactionService extends ChangeNotifier {
           mapData.remove('user_id');
         }
 
-        await client.from('transactions').insert(mapData);
+        // Buang id string lokal agar Supabase mengenerate UUID yang valid
+        mapData.remove('id');
+
+        final response = await client
+            .from('transactions')
+            .insert(mapData)
+            .select()
+            .single();
+
+        // Update ID transaksi di memori dengan UUID resmi dari database
+        final index = _transactions.indexOf(transaction);
+        if (index != -1 && response['id'] != null) {
+          _transactions[index] = transaction.copyWith(id: response['id'].toString());
+          notifyListeners();
+        }
       } catch (e) {
         debugPrint('Catatan simpan ke Supabase: $e');
       }
@@ -208,6 +222,12 @@ class TransactionService extends ChangeNotifier {
         debugPrint('Catatan hapus dari Supabase: $e');
       }
     }
+  }
+
+  /// Bersihkan data transaksi lokal (saat logout)
+  void clear() {
+    _transactions.clear();
+    notifyListeners();
   }
 }
 

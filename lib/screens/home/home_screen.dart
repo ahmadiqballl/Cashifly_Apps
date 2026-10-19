@@ -27,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _txService.fetchFromSupabase();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _txService.fetchFromSupabase();
+    });
   }
 
   @override
@@ -62,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: BoxShape.circle,
                                 gradient: AppColors.primaryButtonGradient,
                                 border: Border.all(
-                                  color: AppColors.primaryPurplePastel.withValues(alpha: 0.5),
+                                  color: AppColors.primaryPurplePastel.withOpacity(0.5),
                                   width: 2,
                                 ),
                               ),
@@ -119,10 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.primaryPurple.withValues(alpha: 0.2),
+                              color: AppColors.primaryPurple.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: AppColors.primaryPurple.withValues(alpha: 0.4),
+                                color: AppColors.primaryPurple.withOpacity(0.4),
                               ),
                             ),
                             child: const Icon(
@@ -258,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primaryPurple.withValues(alpha: 0.3)
+              ? AppColors.primaryPurple.withOpacity(0.3)
               : AppColors.surfaceElevated,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(

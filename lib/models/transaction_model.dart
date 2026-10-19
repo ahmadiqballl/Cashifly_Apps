@@ -135,7 +135,9 @@ class TransactionModel {
     return TransactionModel(
       id: map['id']?.toString() ?? UniqueKey().toString(),
       title: map['title'] as String? ?? 'Transaksi',
-      amount: (map['amount'] as num?)?.toDouble() ?? 0.0,
+      amount: map['amount'] is num
+          ? (map['amount'] as num).toDouble()
+          : (double.tryParse(map['amount']?.toString() ?? '') ?? 0.0),
       type: (map['type'] == 'income') ? TransactionType.income : TransactionType.expense,
       fundCategory: FundCategory.values.firstWhere(
         (e) => e.name == map['fund_category'],

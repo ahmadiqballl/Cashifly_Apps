@@ -46,6 +46,7 @@ class ProfileScreen extends StatelessWidget {
               onPressed: () async {
                 Navigator.of(ctx).pop();
                 await authService.signOut();
+                TransactionService().clear();
               },
               child: const Text('Ya, Keluar'),
             ),
@@ -89,12 +90,12 @@ class ProfileScreen extends StatelessWidget {
                   gradient: AppColors.cardGradient,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.15),
+                    color: Colors.white.withOpacity(0.15),
                     width: 1,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryPurple.withValues(alpha: 0.3),
+                      color: AppColors.primaryPurple.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -161,7 +162,7 @@ class ProfileScreen extends StatelessWidget {
                         Text(
                           user?.email ?? 'pengguna@email.com',
                           style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.8),
+                            color: Colors.white.withOpacity(0.8),
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
@@ -255,7 +256,7 @@ class ProfileScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    backgroundColor: AppColors.rosePink.withValues(alpha: 0.08),
+                    backgroundColor: AppColors.rosePink.withOpacity(0.08),
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -30,18 +30,18 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
         gradient: AppColors.cardGradient,
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryPurple.withValues(alpha: 0.35),
+            color: AppColors.primaryPurple.withOpacity(0.35),
             blurRadius: 24,
             offset: const Offset(0, 10),
           ),
           BoxShadow(
-            color: AppColors.background.withValues(alpha: 0.6),
+            color: AppColors.background.withOpacity(0.6),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.15),
+          color: Colors.white.withOpacity(0.15),
           width: 1.2,
         ),
       ),
@@ -56,7 +56,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
               height: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.neonCyan.withValues(alpha: 0.12),
+                color: AppColors.neonCyan.withOpacity(0.12),
               ),
             ),
           ),
@@ -68,7 +68,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primaryPurpleLight.withValues(alpha: 0.2),
+                color: AppColors.primaryPurpleLight.withOpacity(0.2),
               ),
             ),
           ),
@@ -87,7 +87,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.12),
+                            color: Colors.white.withOpacity(0.12),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const Row(
@@ -148,7 +148,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                 // Divider line
                 Container(
                   height: 1,
-                  color: Colors.white.withValues(alpha: 0.15),
+                  color: Colors.white.withOpacity(0.15),
                 ),
 
                 const SizedBox(height: 16),
@@ -163,7 +163,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.emeraldGreen.withValues(alpha: 0.2),
+                              color: AppColors.emeraldGreen.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
@@ -207,7 +207,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                     Container(
                       width: 1,
                       height: 36,
-                      color: Colors.white.withValues(alpha: 0.15),
+                      color: Colors.white.withOpacity(0.15),
                     ),
 
                     const SizedBox(width: 12),
@@ -219,7 +219,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppColors.rosePink.withValues(alpha: 0.2),
+                              color: AppColors.rosePink.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(

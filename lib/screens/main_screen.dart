@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryPurple.withValues(alpha: 0.5),
+                color: AppColors.primaryPurple.withOpacity(0.5),
                 blurRadius: 16,
                 offset: const Offset(0, 4),
               ),
@@ -68,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
@@ -131,7 +131,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primaryPurple.withValues(alpha: 0.2)
+                    ? AppColors.primaryPurple.withOpacity(0.2)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(20),
               ),
