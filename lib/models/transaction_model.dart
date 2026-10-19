@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
 
@@ -7,7 +8,7 @@ enum TransactionType {
 
   String get label => this == TransactionType.expense ? 'Pengeluaran' : 'Pendapatan';
   Color get color => this == TransactionType.expense ? AppColors.rosePink : AppColors.emeraldGreen;
-  IconData get icon => this == TransactionType.expense ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded;
+  IconData get icon => this == TransactionType.expense ? CupertinoIcons.arrow_up_right : CupertinoIcons.arrow_down_left;
 }
 
 enum FundCategory {
@@ -40,11 +41,11 @@ enum FundCategory {
   IconData get icon {
     switch (this) {
       case FundCategory.danaPanas:
-        return Icons.local_fire_department_rounded;
+        return CupertinoIcons.flame_fill;
       case FundCategory.danaDarurat:
-        return Icons.shield_rounded;
+        return CupertinoIcons.shield_fill;
       case FundCategory.tabungan:
-        return Icons.savings_rounded;
+        return CupertinoIcons.sparkles;
     }
   }
 
@@ -79,11 +80,11 @@ enum AccountType {
   IconData get icon {
     switch (this) {
       case AccountType.bank:
-        return Icons.account_balance_rounded;
+        return CupertinoIcons.building_2_fill;
       case AccountType.eWallet:
-        return Icons.phone_android_rounded;
+        return CupertinoIcons.device_phone_portrait;
       case AccountType.cash:
-        return Icons.payments_rounded;
+        return CupertinoIcons.money_dollar_circle_fill;
     }
   }
 }
@@ -183,4 +184,3 @@ class TransactionModel {
     );
   }
 }
-

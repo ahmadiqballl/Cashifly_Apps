@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -30,45 +31,41 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
         gradient: AppColors.cardGradient,
         boxShadow: [
           BoxShadow(
-            color: AppColors.primaryPurple.withOpacity(0.35),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
+            color: AppColors.iosBlue.withOpacity(0.32),
+            blurRadius: 22,
+            offset: const Offset(0, 8),
           ),
           BoxShadow(
-            color: AppColors.background.withOpacity(0.6),
+            color: Colors.black.withOpacity(0.06),
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           ),
         ],
-        border: Border.all(
-          color: Colors.white.withOpacity(0.15),
-          width: 1.2,
-        ),
       ),
       child: Stack(
         children: [
-          // Background decorative glow shapes
+          // Subtle iOS Card Glow Rings
           Positioned(
-            right: -30,
-            top: -30,
+            right: -25,
+            top: -25,
             child: Container(
               width: 140,
               height: 140,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.neonCyan.withOpacity(0.12),
+                color: Colors.white.withOpacity(0.10),
               ),
             ),
           ),
           Positioned(
-            left: -20,
-            bottom: -20,
+            left: -15,
+            bottom: -15,
             child: Container(
               width: 100,
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primaryPurpleLight.withOpacity(0.2),
+                color: Colors.white.withOpacity(0.06),
               ),
             ),
           ),
@@ -78,68 +75,76 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top row: Label & Visibility Toggle
+                // Top row: Apple Wallet Label & Visibility Toggle
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.12),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Row(
-                            children: [
-                              Icon(Icons.account_balance_wallet_rounded,
-                                  size: 14, color: AppColors.neonCyan),
-                              SizedBox(width: 6),
-                              Text(
-                                'Total Aset Keseluruhan',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.3,
-                                ),
-                              ),
-                            ],
-                          ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.18),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.2),
+                          width: 0.8,
                         ),
-                      ],
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        _isBalanceVisible
-                            ? Icons.visibility_rounded
-                            : Icons.visibility_off_rounded,
-                        color: Colors.white70,
-                        size: 20,
                       ),
-                      onPressed: () {
+                      child: const Row(
+                        children: [
+                          Icon(
+                            CupertinoIcons.creditcard_fill,
+                            size: 13,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 6),
+                          Text(
+                            'Total Aset Keseluruhan',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         setState(() {
                           _isBalanceVisible = !_isBalanceVisible;
                         });
                       },
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.16),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _isBalanceVisible
+                              ? CupertinoIcons.eye_fill
+                              : CupertinoIcons.eye_slash_fill,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
 
-                // Main Balance Amount
+                // Main Balance Amount (iOS Bold Typography)
                 Text(
                   _isBalanceVisible
                       ? CurrencyFormatter.format(widget.totalBalance)
                       : 'Rp ••••••••',
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 32,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: -0.5,
+                    letterSpacing: -0.8,
                   ),
                 ),
 
@@ -147,13 +152,13 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
 
                 // Divider line
                 Container(
-                  height: 1,
-                  color: Colors.white.withOpacity(0.15),
+                  height: 0.8,
+                  color: Colors.white.withOpacity(0.2),
                 ),
 
                 const SizedBox(height: 16),
 
-                // Income vs Expense Summary Row
+                // Income vs Expense Summary Row (iOS Frosted Sub-panels)
                 Row(
                   children: [
                     // Income
@@ -161,15 +166,15 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(7),
                             decoration: BoxDecoration(
-                              color: AppColors.emeraldGreen.withOpacity(0.2),
+                              color: Colors.white.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.arrow_downward_rounded,
-                              color: AppColors.emeraldGreen,
-                              size: 16,
+                              CupertinoIcons.arrow_down_left,
+                              color: Colors.white,
+                              size: 15,
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -177,10 +182,10 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Pemasukan',
                                   style: TextStyle(
-                                    color: Colors.white60,
+                                    color: Colors.white.withOpacity(0.75),
                                     fontSize: 11,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -194,6 +199,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.2,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -205,9 +211,9 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                     ),
 
                     Container(
-                      width: 1,
-                      height: 36,
-                      color: Colors.white.withOpacity(0.15),
+                      width: 0.8,
+                      height: 34,
+                      color: Colors.white.withOpacity(0.2),
                     ),
 
                     const SizedBox(width: 12),
@@ -217,15 +223,15 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(7),
                             decoration: BoxDecoration(
-                              color: AppColors.rosePink.withOpacity(0.2),
+                              color: Colors.white.withOpacity(0.2),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              Icons.arrow_upward_rounded,
-                              color: AppColors.rosePink,
-                              size: 16,
+                              CupertinoIcons.arrow_up_right,
+                              color: Colors.white,
+                              size: 15,
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -233,10 +239,10 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Pengeluaran',
                                   style: TextStyle(
-                                    color: Colors.white60,
+                                    color: Colors.white.withOpacity(0.75),
                                     fontSize: 11,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -250,6 +256,7 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
+                                    letterSpacing: -0.2,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -269,4 +276,3 @@ class _TotalBalanceCardState extends State<TotalBalanceCard> {
     );
   }
 }
-

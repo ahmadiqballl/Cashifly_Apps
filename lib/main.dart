@@ -33,7 +33,7 @@ class CashiflyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cashifly',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
       home: const AuthGate(),
     );
   }

@@ -1,44 +1,50 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Deep Navy Blues
-  static const Color background = Color(0xFF090D1A);
-  static const Color surface = Color(0xFF11182C);
-  static const Color surfaceElevated = Color(0xFF1B243F);
-  static const Color surfaceBorder = Color(0xFF2B3558);
-  static const Color navyDark = Color(0xFF070A14);
+  // iOS Light Backgrounds & Surfaces
+  static const Color background = Color(0xFFF2F2F7); // iOS System Grouped Background
+  static const Color surface = Color(0xFFFFFFFF); // iOS Pure White Card Surface
+  static const Color surfaceElevated = Color(0xFFF8F9FA); // iOS Secondary Surface / Light Gray
+  static const Color surfaceBorder = Color(0xFFE5E5EA); // iOS Hairline Separator
+  static const Color navyDark = Color(0xFF1C1C1E); // iOS Deep Charcoal Label
 
-  // Vibrant Purples & Indigos
-  static const Color primaryPurple = Color(0xFF7C3AED);
-  static const Color primaryPurpleLight = Color(0xFF9333EA);
-  static const Color primaryPurplePastel = Color(0xFFC084FC);
-  static const Color indigoAccent = Color(0xFF4F46E5);
-  static const Color violetAccent = Color(0xFF8B5CF6);
+  // iOS Signature Blue Palette
+  static const Color iosBlue = Color(0xFF007AFF); // Apple System Blue
+  static const Color iosBlueLight = Color(0xFFE5F1FF); // Light Blue Tint for Badges
+  static const Color iosBlueDark = Color(0xFF0056B3); // Deep Apple Blue
+  static const Color iosBlueSubtle = Color(0xFFF0F6FF);
 
-  // Fresh Highlights & Accents
-  static const Color neonCyan = Color(0xFF06B6D4);
-  static const Color emeraldGreen = Color(0xFF10B981);
-  static const Color rosePink = Color(0xFFF43F5E);
-  static const Color amberOrange = Color(0xFFF59E0B);
+  // Remapped aliases to maintain full backwards compatibility with widgets
+  static const Color primaryPurple = Color(0xFF007AFF); // Remapped to iOS Blue
+  static const Color primaryPurpleLight = Color(0xFF0A84FF);
+  static const Color primaryPurplePastel = Color(0xFF007AFF);
+  static const Color indigoAccent = Color(0xFF007AFF);
+  static const Color violetAccent = Color(0xFF5856D6); // iOS Indigo
 
-  // Fund Category Colors
-  static const Color danaPanas = Color(0xFFF97316); // Orange flame
-  static const Color danaDarurat = Color(0xFFEC4899); // Pink shield
-  static const Color danaTabungan = Color(0xFF06B6D4); // Cyan diamond
+  // iOS System Accents
+  static const Color neonCyan = Color(0xFF007AFF); // iOS Signature Blue
+  static const Color emeraldGreen = Color(0xFF34C759); // iOS System Green
+  static const Color rosePink = Color(0xFFFF3B30); // iOS System Red
+  static const Color amberOrange = Color(0xFFFF9500); // iOS System Orange
 
-  // Text Colors
-  static const Color textPrimary = Color(0xFFF8FAFC);
-  static const Color textSecondary = Color(0xFF94A3B8);
-  static const Color textMuted = Color(0xFF64748B);
+  // Fund Category Colors (iOS Aesthetic)
+  static const Color danaPanas = Color(0xFFFF9500); // iOS System Orange (Api/Pengeluaran aktif)
+  static const Color danaDarurat = Color(0xFFFF2D55); // iOS System Pink (Jaga-jaga darurat)
+  static const Color danaTabungan = Color(0xFF007AFF); // iOS System Blue (Tabungan masa depan)
 
-  // Gradients
+  // iOS Typography Colors
+  static const Color textPrimary = Color(0xFF1C1C1E); // iOS Primary Label
+  static const Color textSecondary = Color(0xFF6C6C70); // iOS Secondary Label
+  static const Color textMuted = Color(0xFF8E8E93); // iOS Tertiary/Quaternary Label
+
+  // iOS Premium Gradients
   static const LinearGradient cardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF1E1B4B), // Deep Navy Purple
-      Color(0xFF312E81),
-      Color(0xFF6D28D9), // Vibrant Purple
+      Color(0xFF0A84FF), // iOS Vibrant Blue
+      Color(0xFF007AFF), // iOS Signature Blue
+      Color(0xFF0056C6), // iOS Deep Royal Blue
     ],
   );
 
@@ -46,9 +52,8 @@ class AppColors {
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
     colors: [
-      Color(0xFF6366F1), // Indigo
-      Color(0xFF8B5CF6), // Purple
-      Color(0xFFA855F7), // Violet
+      Color(0xFF0A84FF),
+      Color(0xFF007AFF),
     ],
   );
 
@@ -56,8 +61,8 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFFBE123C),
-      Color(0xFFF43F5E),
+      Color(0xFFFF453A),
+      Color(0xFFFF3B30),
     ],
   );
 
@@ -65,21 +70,34 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF047857),
-      Color(0xFF10B981),
+      Color(0xFF32D74B),
+      Color(0xFF34C759),
     ],
   );
 }
 
 class AppTheme {
-  static ThemeData get darkTheme {
+  static const String _fontFamily = 'SF Pro Display';
+  static const List<String> _fontFamilyFallback = [
+    'SF Pro Text',
+    'SF Pro',
+    '.SF Pro Text',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'system-ui',
+    'sans-serif',
+  ];
+
+  static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.background,
-      colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryPurple,
-        secondary: AppColors.neonCyan,
+      fontFamily: _fontFamily,
+      fontFamilyFallback: _fontFamilyFallback,
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.iosBlue,
+        secondary: AppColors.emeraldGreen,
         surface: AppColors.surface,
         error: AppColors.rosePink,
         onPrimary: Colors.white,
@@ -90,27 +108,30 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
+          fontFamily: _fontFamily,
+          fontFamilyFallback: _fontFamilyFallback,
           color: AppColors.textPrimary,
           fontSize: 20,
           fontWeight: FontWeight.bold,
+          letterSpacing: -0.4,
         ),
-        iconTheme: IconThemeData(color: AppColors.textPrimary),
+        iconTheme: IconThemeData(color: AppColors.iosBlue),
       ),
       cardTheme: CardThemeData(
         color: AppColors.surface,
-        elevation: 4,
-        shadowColor: AppColors.navyDark.withOpacity(0.5),
+        elevation: 0,
+        shadowColor: Colors.black.withOpacity(0.04),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: AppColors.surfaceBorder, width: 1),
+          side: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
         ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        selectedItemColor: AppColors.primaryPurplePastel,
+        selectedItemColor: AppColors.iosBlue,
         unselectedItemColor: AppColors.textMuted,
         type: BottomNavigationBarType.fixed,
-        elevation: 12,
+        elevation: 0,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -118,34 +139,48 @@ class AppTheme {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.surfaceBorder),
+          borderSide: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.surfaceBorder),
+          borderSide: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: AppColors.primaryPurple, width: 2),
+          borderSide: const BorderSide(color: AppColors.iosBlue, width: 1.6),
         ),
-        labelStyle: const TextStyle(color: AppColors.textSecondary),
-        hintStyle: const TextStyle(color: AppColors.textMuted),
+        labelStyle: const TextStyle(
+          fontFamily: _fontFamily,
+          fontFamilyFallback: _fontFamilyFallback,
+          color: AppColors.textSecondary,
+        ),
+        hintStyle: const TextStyle(
+          fontFamily: _fontFamily,
+          fontFamilyFallback: _fontFamilyFallback,
+          color: AppColors.textMuted,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryPurple,
+          backgroundColor: AppColors.iosBlue,
           foregroundColor: Colors.white,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           textStyle: const TextStyle(
+            fontFamily: _fontFamily,
+            fontFamilyFallback: _fontFamilyFallback,
             fontSize: 16,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
+            letterSpacing: -0.2,
           ),
         ),
       ),
     );
   }
-}
 
+  // Fallback alias so existing references to darkTheme automatically get the iOS light theme
+  static ThemeData get darkTheme => lightTheme;
+}

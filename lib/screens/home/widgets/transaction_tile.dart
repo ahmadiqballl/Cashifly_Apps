@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -21,15 +22,15 @@ class TransactionTile extends StatelessWidget {
     final String amountPrefix = isIncome ? '+ ' : '- ';
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.surfaceBorder),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withOpacity(0.03),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -37,21 +38,22 @@ class TransactionTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Icon Box
+          // Icon Box (iOS Soft Tint Capsule)
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
-              color: (isIncome ? AppColors.emeraldGreen : AppColors.primaryPurple)
-                  .withOpacity(0.15),
-              borderRadius: BorderRadius.circular(14),
+              color: isIncome
+                  ? AppColors.emeraldGreen.withOpacity(0.12)
+                  : AppColors.rosePink.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              isIncome ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,
-              color: isIncome ? AppColors.emeraldGreen : AppColors.primaryPurplePastel,
-              size: 20,
+              isIncome ? CupertinoIcons.arrow_down_left : CupertinoIcons.arrow_up_right,
+              color: isIncome ? AppColors.emeraldGreen : AppColors.rosePink,
+              size: 18,
             ),
           ),
-          const SizedBox(width: 14),
+          const SizedBox(width: 12),
 
           // Title & Detail info
           Expanded(
@@ -64,23 +66,24 @@ class TransactionTile extends StatelessWidget {
                     color: AppColors.textPrimary,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
+                    letterSpacing: -0.2,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 3),
                 Row(
                   children: [
                     // Account Source Badge
                     Text(
                       transaction.accountName,
                       style: const TextStyle(
-                        color: AppColors.textMuted,
+                        color: AppColors.textSecondary,
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(width: 6),
+                    const SizedBox(width: 5),
                     Container(
                       width: 3,
                       height: 3,
@@ -89,12 +92,12 @@ class TransactionTile extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    // Fund badge
+                    const SizedBox(width: 5),
+                    // Fund badge (iOS Pill)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: transaction.fundCategory.color.withOpacity(0.15),
+                        color: transaction.fundCategory.color.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
@@ -108,7 +111,7 @@ class TransactionTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 2),
                 Text(
                   DateFormatter.formatDayMonth(transaction.date),
                   style: const TextStyle(
@@ -120,7 +123,7 @@ class TransactionTile extends StatelessWidget {
             ),
           ),
 
-          // Amount
+          // Amount & Delete
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -129,7 +132,8 @@ class TransactionTile extends StatelessWidget {
                 style: TextStyle(
                   color: amountColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.2,
                 ),
               ),
               if (onDelete != null) ...[
@@ -137,9 +141,9 @@ class TransactionTile extends StatelessWidget {
                 GestureDetector(
                   onTap: onDelete,
                   child: const Icon(
-                    Icons.delete_outline_rounded,
+                    CupertinoIcons.trash,
                     color: AppColors.textMuted,
-                    size: 18,
+                    size: 16,
                   ),
                 ),
               ],
@@ -150,4 +154,3 @@ class TransactionTile extends StatelessWidget {
     );
   }
 }
-

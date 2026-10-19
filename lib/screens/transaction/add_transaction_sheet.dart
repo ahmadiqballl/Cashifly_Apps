@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/theme/app_theme.dart';
@@ -19,12 +20,12 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
   final TextEditingController _customAccountController = TextEditingController();
 
   TransactionType _selectedType = TransactionType.expense;
-  // Default Dana Panas sesuai instruksi Yang Mulia: "input normalnya yaa"
+  // Default Dana Panas
   FundCategory _selectedFund = FundCategory.danaPanas;
   AccountType _selectedAccountType = AccountType.bank;
   String _selectedAccountName = AppConstants.availableBanks.first;
-  String _selectedCategory = 'Makanan & Minuman';
-  DateTime _selectedDate = DateTime.now();
+  final String _selectedCategory = 'Makanan & Minuman';
+  final DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -56,9 +57,14 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
     final double amount = CurrencyFormatter.parse(_amountController.text);
     if (amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Nominal transaksi harus lebih dari Rp 0!'),
+        SnackBar(
+          content: const Text(
+            'Nominal transaksi harus lebih dari Rp 0!',
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: AppColors.rosePink,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
       );
       return;
@@ -90,9 +96,14 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+            const Icon(CupertinoIcons.checkmark_circle_fill, color: Colors.white, size: 20),
             const SizedBox(width: 10),
-            Text('Transaksi ${_titleController.text.trim()} berhasil dicatat!'),
+            Expanded(
+              child: Text(
+                'Transaksi ${_titleController.text.trim()} berhasil dicatat!',
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              ),
+            ),
           ],
         ),
         backgroundColor: AppColors.emeraldGreen,
@@ -108,7 +119,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
 
     return Container(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.88,
+        maxHeight: MediaQuery.of(context).size.height * 0.90,
       ),
       decoration: const BoxDecoration(
         color: AppColors.surface,
@@ -116,15 +127,15 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
       ),
       child: Column(
         children: [
-          // Drag handle
+          // iOS Drag Handle
           Center(
             child: Container(
               margin: const EdgeInsets.only(top: 12, bottom: 8),
-              width: 44,
-              height: 4,
+              width: 38,
+              height: 5,
               decoration: BoxDecoration(
-                color: AppColors.surfaceBorder,
-                borderRadius: BorderRadius.circular(2),
+                color: const Color(0xFFD1D1D6),
+                borderRadius: BorderRadius.circular(3),
               ),
             ),
           ),
@@ -140,18 +151,30 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                   style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.close_rounded, color: AppColors.textSecondary),
-                  onPressed: () => Navigator.of(context).pop(),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceElevated,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.xmark,
+                      color: AppColors.textSecondary,
+                      size: 16,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
 
-          const Divider(height: 1, color: AppColors.surfaceBorder),
+          const Divider(height: 1, color: AppColors.surfaceBorder, thickness: 0.8),
 
           // Scrollable Form
           Expanded(
@@ -162,7 +185,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 1. Tipe Transaksi: Pengeluaran vs Pendapatan
+                    // 1. Tipe Transaksi: Pengeluaran vs Pendapatan (iOS Segmented Style)
                     _buildTypeToggle(),
 
                     const SizedBox(height: 18),
@@ -182,15 +205,20 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                       keyboardType: TextInputType.number,
                       style: const TextStyle(
                         color: AppColors.textPrimary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.5,
                       ),
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.money_rounded, color: AppColors.primaryPurplePastel),
+                        prefixIcon: const Icon(
+                          CupertinoIcons.money_dollar,
+                          color: AppColors.iosBlue,
+                          size: 24,
+                        ),
                         hintText: '0',
                         hintStyle: TextStyle(
                           color: AppColors.textMuted.withOpacity(0.5),
-                          fontSize: 22,
+                          fontSize: 24,
                         ),
                       ),
                       validator: (value) {
@@ -201,7 +229,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                       },
                     ),
 
-                    // Quick Nominal Chips
+                    // Quick Nominal Chips (iOS Pill Style)
                     const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
@@ -209,10 +237,15 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                         return ActionChip(
                           label: Text(
                             '+ ${CurrencyFormatter.formatCompact(amt)}',
-                            style: const TextStyle(fontSize: 11, color: AppColors.textPrimary),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           backgroundColor: AppColors.surfaceElevated,
-                          side: const BorderSide(color: AppColors.surfaceBorder),
+                          side: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                           onPressed: () {
                             final current = CurrencyFormatter.parse(_amountController.text);
                             final total = current + amt;
@@ -238,7 +271,11 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                       controller: _titleController,
                       style: const TextStyle(color: AppColors.textPrimary),
                       decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.edit_note_rounded, color: AppColors.primaryPurplePastel),
+                        prefixIcon: Icon(
+                          CupertinoIcons.pencil_ellipsis_rectangle,
+                          color: AppColors.iosBlue,
+                          size: 20,
+                        ),
                         hintText: 'Misal: Makan Siang, Bensin, Tabungan Emas',
                       ),
                       validator: (value) {
@@ -259,9 +296,9 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                     // 5. Tipe Penyimpanan (Bank, E-Wallet, Cash)
                     _buildAccountStorageSelector(),
 
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 26),
 
-                    // Submit Button
+                    // iOS Style Submit Button
                     SizedBox(
                       width: double.infinity,
                       height: 52,
@@ -271,7 +308,7 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryPurple.withOpacity(0.4),
+                              color: AppColors.iosBlue.withOpacity(0.35),
                               blurRadius: 14,
                               offset: const Offset(0, 4),
                             ),
@@ -289,14 +326,15 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.check_rounded, color: Colors.white, size: 20),
+                              Icon(CupertinoIcons.checkmark_alt, color: Colors.white, size: 20),
                               SizedBox(width: 8),
                               Text(
                                 'Simpan Transaksi',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
                                   color: Colors.white,
+                                  letterSpacing: -0.2,
                                 ),
                               ),
                             ],
@@ -318,9 +356,8 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: AppColors.surfaceElevated,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.surfaceBorder),
+        color: const Color(0xFFE5E5EA),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
         children: [
@@ -332,29 +369,41 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                 });
               },
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                duration: const Duration(milliseconds: 180),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: _selectedType == TransactionType.expense
-                      ? AppColors.rosePink.withOpacity(0.25)
+                      ? Colors.white
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: _selectedType == TransactionType.expense
-                        ? AppColors.rosePink
-                        : Colors.transparent,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: _selectedType == TransactionType.expense
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.12),
+                            blurRadius: 4,
+                            offset: const Offset(0, 1),
+                          ),
+                        ]
+                      : null,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.arrow_upward_rounded, color: AppColors.rosePink, size: 18),
-                    SizedBox(width: 6),
+                    Icon(
+                      CupertinoIcons.arrow_up_right,
+                      color: _selectedType == TransactionType.expense
+                          ? AppColors.rosePink
+                          : AppColors.textSecondary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 6),
                     Text(
                       'Pengeluaran',
                       style: TextStyle(
-                        color: AppColors.rosePink,
-                        fontWeight: FontWeight.bold,
+                        color: _selectedType == TransactionType.expense
+                            ? AppColors.rosePink
+                            : AppColors.textSecondary,
+                        fontWeight: FontWeight.w700,
                         fontSize: 14,
                       ),
                     ),
@@ -371,29 +420,41 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                 });
               },
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(vertical: 12),
+                duration: const Duration(milliseconds: 180),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: _selectedType == TransactionType.income
-                      ? AppColors.emeraldGreen.withOpacity(0.25)
+                      ? Colors.white
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: _selectedType == TransactionType.income
-                        ? AppColors.emeraldGreen
-                        : Colors.transparent,
-                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: _selectedType == TransactionType.income
+                      ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.12),
+                            blurRadius: 4,
+                            offset: const Offset(0, 1),
+                          ),
+                        ]
+                      : null,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.arrow_downward_rounded, color: AppColors.emeraldGreen, size: 18),
-                    SizedBox(width: 6),
+                    Icon(
+                      CupertinoIcons.arrow_down_left,
+                      color: _selectedType == TransactionType.income
+                          ? AppColors.emeraldGreen
+                          : AppColors.textSecondary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 6),
                     Text(
                       'Pendapatan',
                       style: TextStyle(
-                        color: AppColors.emeraldGreen,
-                        fontWeight: FontWeight.bold,
+                        color: _selectedType == TransactionType.income
+                            ? AppColors.emeraldGreen
+                            : AppColors.textSecondary,
+                        fontWeight: FontWeight.w700,
                         fontSize: 14,
                       ),
                     ),
@@ -443,29 +504,34 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                     _selectedFund = fund;
                   });
                 },
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
                   margin: EdgeInsets.only(right: fund != FundCategory.values.last ? 8 : 0),
                   padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? fund.color.withOpacity(0.2)
+                        ? fund.color.withOpacity(0.12)
                         : AppColors.surfaceElevated,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: isSelected ? fund.color : AppColors.surfaceBorder,
-                      width: isSelected ? 1.5 : 1,
+                      width: isSelected ? 1.5 : 0.8,
                     ),
                   ),
                   child: Column(
                     children: [
-                      Icon(fund.icon, color: isSelected ? fund.color : AppColors.textSecondary, size: 20),
+                      Icon(
+                        fund.icon,
+                        color: isSelected ? fund.color : AppColors.textSecondary,
+                        size: 20,
+                      ),
                       const SizedBox(height: 6),
                       Text(
                         fund.label,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.textSecondary,
+                          color: isSelected ? fund.color : AppColors.textSecondary,
                           fontSize: 12,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -505,30 +571,34 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
                     _updateDefaultAccountName();
                   });
                 },
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
                   margin: EdgeInsets.only(right: type != AccountType.values.last ? 8 : 0),
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? AppColors.primaryPurple.withOpacity(0.25)
+                        ? AppColors.iosBlueLight
                         : AppColors.surfaceElevated,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: isSelected ? AppColors.primaryPurplePastel : AppColors.surfaceBorder,
+                      color: isSelected ? AppColors.iosBlue : AppColors.surfaceBorder,
+                      width: isSelected ? 1.4 : 0.8,
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(type.icon,
-                          size: 16,
-                          color: isSelected ? AppColors.primaryPurplePastel : AppColors.textMuted),
+                      Icon(
+                        type.icon,
+                        size: 16,
+                        color: isSelected ? AppColors.iosBlue : AppColors.textMuted,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         type.label,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.textSecondary,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          color: isSelected ? AppColors.iosBlue : AppColors.textSecondary,
+                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                           fontSize: 12,
                         ),
                       ),
@@ -548,11 +618,11 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
             value: AppConstants.availableBanks.contains(_selectedAccountName)
                 ? _selectedAccountName
                 : AppConstants.availableBanks.first,
-            dropdownColor: AppColors.surfaceElevated,
+            dropdownColor: AppColors.surface,
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: const InputDecoration(
               labelText: 'Pilih Bank',
-              prefixIcon: Icon(Icons.account_balance_rounded, color: AppColors.neonCyan),
+              prefixIcon: Icon(CupertinoIcons.building_2_fill, color: AppColors.iosBlue, size: 20),
             ),
             items: AppConstants.availableBanks.map((bank) {
               return DropdownMenuItem(
@@ -583,11 +653,11 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
             value: AppConstants.availableEWallets.contains(_selectedAccountName)
                 ? _selectedAccountName
                 : AppConstants.availableEWallets.first,
-            dropdownColor: AppColors.surfaceElevated,
+            dropdownColor: AppColors.surface,
             style: const TextStyle(color: AppColors.textPrimary, fontSize: 14),
             decoration: const InputDecoration(
               labelText: 'Pilih E-Wallet',
-              prefixIcon: Icon(Icons.phone_android_rounded, color: AppColors.neonCyan),
+              prefixIcon: Icon(CupertinoIcons.device_phone_portrait, color: AppColors.iosBlue, size: 20),
             ),
             items: AppConstants.availableEWallets.map((wallet) {
               return DropdownMenuItem(
@@ -619,15 +689,19 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
             decoration: BoxDecoration(
               color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.surfaceBorder),
+              border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
             ),
             child: const Row(
               children: [
-                Icon(Icons.check_circle_rounded, color: AppColors.emeraldGreen, size: 18),
+                Icon(CupertinoIcons.checkmark_circle_fill, color: AppColors.emeraldGreen, size: 18),
                 SizedBox(width: 10),
                 Text(
                   'Uang Tunai / Dompet Fisik',
-                  style: TextStyle(color: AppColors.textPrimary, fontSize: 13),
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -637,4 +711,3 @@ class _AddTransactionSheetState extends State<AddTransactionSheet> {
     );
   }
 }
-

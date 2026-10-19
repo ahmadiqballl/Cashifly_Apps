@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../services/auth_service.dart';
@@ -42,9 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_isRegisterMode) {
       if (password != _confirmPasswordController.text.trim()) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Konfirmasi kata sandi tidak cocok!'),
+          SnackBar(
+            content: const Text('Konfirmasi kata sandi tidak cocok!'),
             backgroundColor: AppColors.rosePink,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
         );
         return;
@@ -74,15 +77,19 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(color: AppColors.surfaceBorder),
+            side: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
           ),
           title: Row(
             children: [
-              const Icon(Icons.info_outline_rounded, color: AppColors.rosePink),
+              const Icon(CupertinoIcons.info_circle_fill, color: AppColors.rosePink, size: 22),
               const SizedBox(width: 10),
               Text(
                 _isRegisterMode ? 'Informasi Pendaftaran' : 'Gagal Masuk',
-                style: const TextStyle(color: AppColors.textPrimary, fontSize: 16),
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
@@ -93,7 +100,14 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Tutup', style: TextStyle(color: AppColors.primaryPurplePastel)),
+              child: const Text(
+                'Tutup',
+                style: TextStyle(
+                  color: AppColors.iosBlue,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ],
         ),
@@ -107,28 +121,28 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Background Glow Orbs
+          // Background iOS Ambient Light Orbs
           Positioned(
-            top: -60,
-            right: -60,
+            top: -50,
+            right: -50,
             child: Container(
               width: 240,
               height: 240,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primaryPurple.withOpacity(0.22),
+                color: AppColors.iosBlue.withOpacity(0.08),
               ),
             ),
           ),
           Positioned(
-            bottom: -50,
-            left: -50,
+            bottom: -60,
+            left: -60,
             child: Container(
               width: 220,
               height: 220,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.neonCyan.withOpacity(0.12),
+                color: AppColors.emeraldGreen.withOpacity(0.06),
               ),
             ),
           ),
@@ -142,21 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Logo Box
+                      // iOS App Icon Box (Squircle)
                       Container(
-                        width: 80,
-                        height: 80,
+                        width: 76,
+                        height: 76,
                         decoration: BoxDecoration(
                           gradient: AppColors.cardGradient,
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: AppColors.primaryPurplePastel.withOpacity(0.5),
-                            width: 2,
-                          ),
+                          borderRadius: BorderRadius.circular(22),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primaryPurple.withOpacity(0.4),
-                              blurRadius: 20,
+                              color: AppColors.iosBlue.withOpacity(0.32),
+                              blurRadius: 18,
                               offset: const Offset(0, 6),
                             ),
                           ],
@@ -164,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Center(
                           child: Text(
                             '💸',
-                            style: TextStyle(fontSize: 38),
+                            style: TextStyle(fontSize: 36),
                           ),
                         ),
                       ),
@@ -174,10 +184,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text(
                         'Cashifly',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -0.5,
+                          color: AppColors.textPrimary,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: -0.6,
                         ),
                       ),
 
@@ -185,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       Text(
                         _isRegisterMode
-                            ? 'Buat akun baru untuk mulai mengelola keuangan'
+                            ? 'Buat akun baru untuk mulai mencatat keuangan'
                             : 'Masuk dengan email dan kata sandi Anda',
                         style: const TextStyle(
                           color: AppColors.textSecondary,
@@ -194,15 +204,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                       ),
 
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 22),
 
-                      // Mode Switcher: Masuk vs Daftar
+                      // iOS Segmented Mode Switcher: Masuk vs Daftar
                       Container(
-                        padding: const EdgeInsets.all(4),
+                        padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: AppColors.surfaceBorder),
+                          color: const Color(0xFFE5E5EA),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
                           children: [
@@ -214,22 +223,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 },
                                 child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  duration: const Duration(milliseconds: 180),
+                                  padding: const EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                    color: !_isRegisterMode
-                                        ? AppColors.primaryPurple
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(12),
+                                    color: !_isRegisterMode ? Colors.white : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: !_isRegisterMode
+                                        ? [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.12),
+                                              blurRadius: 4,
+                                              offset: const Offset(0, 1),
+                                            ),
+                                          ]
+                                        : null,
                                   ),
                                   child: Center(
                                     child: Text(
                                       'Masuk',
                                       style: TextStyle(
                                         color: !_isRegisterMode
-                                            ? Colors.white
-                                            : AppColors.textMuted,
-                                        fontWeight: FontWeight.bold,
+                                            ? AppColors.textPrimary
+                                            : AppColors.textSecondary,
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 14,
                                       ),
                                     ),
@@ -245,22 +261,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 },
                                 child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                  duration: const Duration(milliseconds: 180),
+                                  padding: const EdgeInsets.symmetric(vertical: 9),
                                   decoration: BoxDecoration(
-                                    color: _isRegisterMode
-                                        ? AppColors.primaryPurple
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(12),
+                                    color: _isRegisterMode ? Colors.white : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(10),
+                                    boxShadow: _isRegisterMode
+                                        ? [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.12),
+                                              blurRadius: 4,
+                                              offset: const Offset(0, 1),
+                                            ),
+                                          ]
+                                        : null,
                                   ),
                                   child: Center(
                                     child: Text(
                                       'Daftar Akun',
                                       style: TextStyle(
                                         color: _isRegisterMode
-                                            ? Colors.white
-                                            : AppColors.textMuted,
-                                        fontWeight: FontWeight.bold,
+                                            ? AppColors.textPrimary
+                                            : AppColors.textSecondary,
+                                        fontWeight: FontWeight.w700,
                                         fontSize: 14,
                                       ),
                                     ),
@@ -272,15 +295,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 22),
+                      const SizedBox(height: 20),
 
-                      // Input Fields Card
+                      // Input Fields Card (iOS Clean White Surface)
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: AppColors.surface,
                           borderRadius: BorderRadius.circular(22),
-                          border: Border.all(color: AppColors.surfaceBorder),
+                          border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.04),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,11 +328,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(height: 6),
                               TextFormField(
                                 controller: _nameController,
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(color: AppColors.textPrimary),
                                 decoration: const InputDecoration(
                                   hintText: 'Misal: Budi Santoso',
-                                  prefixIcon: Icon(Icons.person_rounded,
-                                      color: AppColors.primaryPurplePastel, size: 20),
+                                  prefixIcon: Icon(
+                                    CupertinoIcons.person_fill,
+                                    color: AppColors.iosBlue,
+                                    size: 18,
+                                  ),
                                 ),
                                 validator: (val) {
                                   if (_isRegisterMode && (val == null || val.trim().isEmpty)) {
@@ -327,11 +360,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: AppColors.textPrimary),
                               decoration: const InputDecoration(
                                 hintText: 'nama@email.com',
-                                prefixIcon: Icon(Icons.mail_outline_rounded,
-                                    color: AppColors.primaryPurplePastel, size: 20),
+                                prefixIcon: Icon(
+                                  CupertinoIcons.mail_solid,
+                                  color: AppColors.iosBlue,
+                                  size: 18,
+                                ),
                               ),
                               validator: (val) {
                                 if (val == null || val.trim().isEmpty) {
@@ -359,18 +395,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: AppColors.textPrimary),
                               decoration: InputDecoration(
                                 hintText: 'Minimal 6 karakter',
-                                prefixIcon: const Icon(Icons.lock_outline_rounded,
-                                    color: AppColors.primaryPurplePastel, size: 20),
+                                prefixIcon: const Icon(
+                                  CupertinoIcons.lock_fill,
+                                  color: AppColors.iosBlue,
+                                  size: 18,
+                                ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword
-                                        ? Icons.visibility_off_rounded
-                                        : Icons.visibility_rounded,
+                                        ? CupertinoIcons.eye_slash_fill
+                                        : CupertinoIcons.eye_fill,
                                     color: AppColors.textMuted,
-                                    size: 20,
+                                    size: 18,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -405,18 +444,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextFormField(
                                 controller: _confirmPasswordController,
                                 obscureText: _obscureConfirmPassword,
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(color: AppColors.textPrimary),
                                 decoration: InputDecoration(
                                   hintText: 'Ulangi kata sandi Anda',
-                                  prefixIcon: const Icon(Icons.lock_rounded,
-                                      color: AppColors.primaryPurplePastel, size: 20),
+                                  prefixIcon: const Icon(
+                                    CupertinoIcons.lock_shield_fill,
+                                    color: AppColors.iosBlue,
+                                    size: 18,
+                                  ),
                                   suffixIcon: IconButton(
                                     icon: Icon(
                                       _obscureConfirmPassword
-                                          ? Icons.visibility_off_rounded
-                                          : Icons.visibility_rounded,
+                                          ? CupertinoIcons.eye_slash_fill
+                                          : CupertinoIcons.eye_fill,
                                       color: AppColors.textMuted,
-                                      size: 20,
+                                      size: 18,
                                     ),
                                     onPressed: () {
                                       setState(() {
@@ -436,7 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             const SizedBox(height: 24),
 
-                            // Submit Button
+                            // Submit Button (iOS Blue Button)
                             AnimatedBuilder(
                               animation: _authService,
                               builder: (context, _) {
@@ -449,7 +491,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       borderRadius: BorderRadius.circular(14),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: AppColors.primaryPurple.withOpacity(0.4),
+                                          color: AppColors.iosBlue.withOpacity(0.35),
                                           blurRadius: 12,
                                           offset: const Offset(0, 4),
                                         ),
@@ -479,8 +521,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   : 'Masuk ke Akun',
                                               style: const TextStyle(
                                                 fontSize: 15,
-                                                fontWeight: FontWeight.bold,
+                                                fontWeight: FontWeight.w700,
                                                 color: Colors.white,
+                                                letterSpacing: -0.2,
                                               ),
                                             ),
                                     ),
@@ -492,22 +535,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 18),
 
                       // Tombol Mode Uji Coba Cepat (Yang Mulia 👑)
                       SizedBox(
                         width: double.infinity,
-                        height: 44,
+                        height: 46,
                         child: OutlinedButton(
                           onPressed: () {
                             _authService.signInDemo();
                           },
                           style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: AppColors.surfaceBorder),
+                            side: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14),
                             ),
-                            backgroundColor: AppColors.surfaceElevated,
+                            backgroundColor: AppColors.surface,
                           ),
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -517,9 +560,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               Text(
                                 'Masuk Cepat Mode Pengujian (Yang Mulia)',
                                 style: TextStyle(
-                                  color: AppColors.primaryPurplePastel,
+                                  color: AppColors.iosBlue,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 12,
+                                  fontSize: 13,
                                 ),
                               ),
                             ],
@@ -533,13 +576,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.shield_rounded, size: 14, color: AppColors.textMuted),
+                          Icon(CupertinoIcons.shield_fill, size: 14, color: AppColors.textMuted),
                           SizedBox(width: 6),
                           Text(
                             'Autentikasi Aman Supabase Database',
                             style: TextStyle(
                               color: AppColors.textMuted,
                               fontSize: 11,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],

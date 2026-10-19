@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
 import 'home/home_screen.dart';
@@ -31,72 +32,74 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: IndexedStack(
         index: _currentIndex,
         children: _pages,
       ),
-      // Sleek Floating Action Button for recording transactions
+      // iOS Style Floating Action Button for recording transactions
       floatingActionButton: FloatingActionButton(
         onPressed: _openAddTransactionSheet,
-        elevation: 6,
+        elevation: 0,
         backgroundColor: Colors.transparent,
+        highlightElevation: 0,
         child: Container(
-          width: 56,
-          height: 56,
+          width: 54,
+          height: 54,
           decoration: BoxDecoration(
             gradient: AppColors.primaryButtonGradient,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: AppColors.primaryPurple.withOpacity(0.5),
+                color: AppColors.iosBlue.withOpacity(0.38),
                 blurRadius: 16,
-                offset: const Offset(0, 4),
+                offset: const Offset(0, 6),
               ),
             ],
           ),
-          child: const Icon(Icons.add_rounded, color: Colors.white, size: 30),
+          child: const Icon(CupertinoIcons.plus, color: Colors.white, size: 28),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-      // 2 Bottom Navigation Items: Home and Profile
+      // iOS Style Translucent White Tab Bar
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
           border: const Border(
-            top: BorderSide(color: AppColors.surfaceBorder, width: 1),
+            top: BorderSide(color: AppColors.surfaceBorder, width: 0.8),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 20,
-              offset: const Offset(0, -4),
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 12,
+              offset: const Offset(0, -2),
             ),
           ],
         ),
         child: SafeArea(
           child: SizedBox(
-            height: 64,
+            height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // Item 1: Home
+                // Item 1: Beranda
                 _buildNavItem(
                   index: 0,
-                  label: 'Home',
-                  icon: Icons.home_rounded,
-                  activeIcon: Icons.home_filled,
+                  label: 'Beranda',
+                  icon: CupertinoIcons.house,
+                  activeIcon: CupertinoIcons.house_fill,
                 ),
 
                 // Spacing for center docked FAB
                 const SizedBox(width: 48),
 
-                // Item 2: Profile
+                // Item 2: Profil
                 _buildNavItem(
                   index: 1,
-                  label: 'Profile',
-                  icon: Icons.person_outline_rounded,
-                  activeIcon: Icons.person_rounded,
+                  label: 'Profil',
+                  icon: CupertinoIcons.person,
+                  activeIcon: CupertinoIcons.person_fill,
                 ),
               ],
             ),
@@ -128,16 +131,16 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primaryPurple.withOpacity(0.2)
+                    ? AppColors.iosBlueLight
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Icon(
                 isSelected ? activeIcon : icon,
-                color: isSelected ? AppColors.primaryPurplePastel : AppColors.textMuted,
+                color: isSelected ? AppColors.iosBlue : AppColors.textMuted,
                 size: 24,
               ),
             ),
@@ -145,9 +148,10 @@ class _MainScreenState extends State<MainScreen> {
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : AppColors.textMuted,
+                color: isSelected ? AppColors.iosBlue : AppColors.textMuted,
                 fontSize: 11,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                letterSpacing: -0.2,
               ),
             ),
           ],
@@ -156,4 +160,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-

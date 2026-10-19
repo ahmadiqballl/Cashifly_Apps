@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -13,7 +14,7 @@ class WeeklyChartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<WeeklySummary> weeklyData = service.getWeeklyAnalysis();
 
-    // Cari nilai maksimum untuk normalisasi tinggi grafik
+    // Nilai maksimum untuk normalisasi tinggi grafik
     double maxVal = 100000;
     for (final w in weeklyData) {
       maxVal = max(maxVal, max(w.income, w.expense));
@@ -24,10 +25,10 @@ class WeeklyChartCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.surfaceBorder),
+        border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -43,14 +44,14 @@ class WeeklyChartCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.neonCyan.withOpacity(0.15),
+                      color: AppColors.iosBlueLight,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
-                      Icons.bar_chart_rounded,
-                      color: AppColors.neonCyan,
+                      CupertinoIcons.chart_bar_fill,
+                      color: AppColors.iosBlue,
                       size: 18,
                     ),
                   ),
@@ -60,7 +61,8 @@ class WeeklyChartCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.3,
                     ),
                   ),
                 ],
@@ -75,11 +77,11 @@ class WeeklyChartCard extends StatelessWidget {
             children: [
               _buildLegendDot(AppColors.emeraldGreen, 'Pendapatan'),
               const SizedBox(width: 16),
-              _buildLegendDot(AppColors.primaryPurplePastel, 'Pengeluaran'),
+              _buildLegendDot(AppColors.iosBlue, 'Pengeluaran'),
             ],
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 22),
 
           // Bar Chart Area
           SizedBox(
@@ -98,7 +100,7 @@ class WeeklyChartCard extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // Income Bar
+                        // Income Bar (iOS Green)
                         _buildBar(
                           height: 110 * incomeRatio,
                           color: AppColors.emeraldGreen,
@@ -106,23 +108,23 @@ class WeeklyChartCard extends StatelessWidget {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Color(0xFF065F46),
+                              Color(0xFF28A745),
                               AppColors.emeraldGreen,
                             ],
                           ),
                           tooltip: CurrencyFormatter.formatCompact(week.income),
                         ),
                         const SizedBox(width: 6),
-                        // Expense Bar
+                        // Expense Bar (iOS Blue)
                         _buildBar(
                           height: 110 * expenseRatio,
-                          color: AppColors.primaryPurple,
+                          color: AppColors.iosBlue,
                           gradient: const LinearGradient(
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Color(0xFF4C1D95),
-                              AppColors.primaryPurplePastel,
+                              Color(0xFF0056C6),
+                              AppColors.iosBlue,
                             ],
                           ),
                           tooltip: CurrencyFormatter.formatCompact(week.expense),
@@ -147,20 +149,20 @@ class WeeklyChartCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Net summary footer
+          // Net summary footer (iOS Light Capsule)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.surfaceBorder),
+              border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.insights_rounded, size: 16, color: AppColors.neonCyan),
+                    Icon(CupertinoIcons.sparkles, size: 16, color: AppColors.iosBlue),
                     SizedBox(width: 8),
                     Text(
                       'Rasio Finansial',
@@ -194,11 +196,11 @@ class WeeklyChartCard extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 9,
-          height: 9,
+          width: 8,
+          height: 8,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(3),
+            shape: BoxShape.circle,
           ),
         ),
         const SizedBox(width: 6),
@@ -232,16 +234,16 @@ class WeeklyChartCard extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Container(
-          width: 18,
+          width: 16,
           height: height,
           decoration: BoxDecoration(
             gradient: gradient,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(6)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
             boxShadow: [
               BoxShadow(
-                color: color.withOpacity(0.3),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
+                color: color.withOpacity(0.2),
+                blurRadius: 4,
+                offset: const Offset(0, 1),
               ),
             ],
           ),
@@ -250,4 +252,3 @@ class WeeklyChartCard extends StatelessWidget {
     );
   }
 }
-

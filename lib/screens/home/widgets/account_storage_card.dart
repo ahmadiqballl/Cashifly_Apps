@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -29,10 +30,10 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.surfaceBorder),
+        border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -48,14 +49,14 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.indigoAccent.withOpacity(0.2),
+                      color: AppColors.iosBlueLight,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
-                      Icons.account_balance_rounded,
-                      color: AppColors.violetAccent,
+                      CupertinoIcons.building_2_fill,
+                      color: AppColors.iosBlue,
                       size: 18,
                     ),
                   ),
@@ -65,17 +66,18 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
                     style: TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.3,
                     ),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceElevated,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.surfaceBorder),
+                  border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
                 ),
                 child: const Text(
                   'Bank • E-Wallet • Cash',
@@ -91,33 +93,33 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
 
           const SizedBox(height: 16),
 
-          // 3 Tabs for Bank, E-Wallet, Cash
+          // 3 Tabs for Bank, E-Wallet, Cash (iOS Clean Segmented Style)
           Row(
             children: [
               _buildTypeTab(
                 type: AccountType.bank,
                 label: 'Bank',
                 amount: bankBalance,
-                icon: Icons.account_balance_rounded,
+                icon: CupertinoIcons.building_2_fill,
               ),
               const SizedBox(width: 8),
               _buildTypeTab(
                 type: AccountType.eWallet,
                 label: 'E-Wallet',
                 amount: eWalletBalance,
-                icon: Icons.phone_android_rounded,
+                icon: CupertinoIcons.device_phone_portrait,
               ),
               const SizedBox(width: 8),
               _buildTypeTab(
                 type: AccountType.cash,
                 label: 'Cash',
                 amount: cashBalance,
-                icon: Icons.payments_rounded,
+                icon: CupertinoIcons.money_dollar_circle_fill,
               ),
             ],
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
 
           // Details breakdown for the selected type
           Container(
@@ -125,7 +127,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
             decoration: BoxDecoration(
               color: AppColors.surfaceElevated,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.surfaceBorder),
+              border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +166,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
                 ] else ...[
                   ...activeBreakdown.entries.map((entry) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 6),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -174,7 +176,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
                                 width: 7,
                                 height: 7,
                                 decoration: const BoxDecoration(
-                                  color: AppColors.primaryPurplePastel,
+                                  color: AppColors.iosBlue,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -192,7 +194,7 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
                           Text(
                             CurrencyFormatter.format(entry.value),
                             style: const TextStyle(
-                              color: AppColors.neonCyan,
+                              color: AppColors.iosBlue,
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
                             ),
@@ -226,41 +228,46 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
           });
         },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
-            color: isSelected
-                ? AppColors.primaryPurple.withOpacity(0.25)
-                : AppColors.surfaceElevated,
+            color: isSelected ? Colors.white : AppColors.surfaceElevated,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: isSelected
-                  ? AppColors.primaryPurple
-                  : AppColors.surfaceBorder,
-              width: isSelected ? 1.5 : 1,
+              color: isSelected ? AppColors.iosBlue : AppColors.surfaceBorder,
+              width: isSelected ? 1.5 : 0.8,
             ),
+            boxShadow: isSelected
+                ? [
+                    BoxShadow(
+                      color: AppColors.iosBlue.withOpacity(0.12),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
           child: Column(
             children: [
               Icon(
                 icon,
-                color: isSelected ? AppColors.primaryPurplePastel : AppColors.textSecondary,
+                color: isSelected ? AppColors.iosBlue : AppColors.textSecondary,
                 size: 20,
               ),
               const SizedBox(height: 6),
               Text(
                 label,
                 style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                  color: isSelected ? AppColors.iosBlue : AppColors.textSecondary,
                   fontSize: 12,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 CurrencyFormatter.formatCompact(amount),
                 style: TextStyle(
-                  color: isSelected ? AppColors.neonCyan : AppColors.textMuted,
+                  color: isSelected ? AppColors.textPrimary : AppColors.textMuted,
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                 ),
@@ -273,4 +280,3 @@ class _AccountStorageCardState extends State<AccountStorageCard> {
     );
   }
 }
-

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
@@ -25,10 +26,10 @@ class FundAllocationCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.surfaceBorder),
+        border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -44,14 +45,14 @@ class FundAllocationCard extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryPurple.withOpacity(0.2),
+                      color: AppColors.iosBlueLight,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: const Icon(
-                      Icons.pie_chart_outline_rounded,
-                      color: AppColors.primaryPurplePastel,
+                      CupertinoIcons.chart_pie_fill,
+                      color: AppColors.iosBlue,
                       size: 18,
                     ),
                   ),
@@ -61,17 +62,18 @@ class FundAllocationCard extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.textPrimary,
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.3,
                     ),
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceElevated,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.surfaceBorder),
+                  border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
                 ),
                 child: const Text(
                   '3 Kategori',
@@ -87,11 +89,11 @@ class FundAllocationCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Visual Segmented Progress Bar
+          // Visual Segmented Progress Bar (iOS Smooth Capsule)
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(6),
             child: SizedBox(
-              height: 10,
+              height: 8,
               child: Row(
                 children: [
                   if (pctPanas > 0)
@@ -118,7 +120,7 @@ class FundAllocationCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
 
           // 3 Item Cards: Dana Panas, Dana Darurat, Ditabung
           _buildFundItem(
@@ -156,16 +158,17 @@ class FundAllocationCard extends StatelessWidget {
         color: AppColors.surfaceElevated,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: category.color.withOpacity(0.25),
+          color: AppColors.surfaceBorder,
+          width: 0.8,
         ),
       ),
       child: Row(
         children: [
-          // Icon badge
+          // Icon badge (Apple squircle)
           Container(
             padding: const EdgeInsets.all(9),
             decoration: BoxDecoration(
-              color: category.color.withOpacity(0.15),
+              color: category.color.withOpacity(0.12),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -189,6 +192,7 @@ class FundAllocationCard extends StatelessWidget {
                         color: AppColors.textPrimary,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
+                        letterSpacing: -0.2,
                       ),
                     ),
                     if (isDefault) ...[
@@ -196,7 +200,7 @@ class FundAllocationCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.amberOrange.withOpacity(0.2),
+                          color: AppColors.amberOrange.withOpacity(0.14),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: const Text(
@@ -204,18 +208,18 @@ class FundAllocationCard extends StatelessWidget {
                           style: TextStyle(
                             color: AppColors.amberOrange,
                             fontSize: 9,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
                     ],
                   ],
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 2),
                 Text(
                   category.description,
                   style: const TextStyle(
-                    color: AppColors.textMuted,
+                    color: AppColors.textSecondary,
                     fontSize: 11,
                   ),
                 ),
@@ -251,4 +255,3 @@ class FundAllocationCard extends StatelessWidget {
     );
   }
 }
-

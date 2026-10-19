@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/currency_formatter.dart';
@@ -16,15 +17,19 @@ class ProfileScreen extends StatelessWidget {
           backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-            side: const BorderSide(color: AppColors.surfaceBorder),
+            side: const BorderSide(color: AppColors.surfaceBorder, width: 0.8),
           ),
           title: const Row(
             children: [
-              Icon(Icons.logout_rounded, color: AppColors.rosePink),
+              Icon(CupertinoIcons.square_arrow_right, color: AppColors.rosePink, size: 22),
               SizedBox(width: 10),
               Text(
                 'Konfirmasi Keluar',
-                style: TextStyle(color: AppColors.textPrimary, fontSize: 18),
+                style: TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
@@ -35,7 +40,10 @@ class ProfileScreen extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text('Batal', style: TextStyle(color: AppColors.textMuted)),
+              child: const Text(
+                'Batal',
+                style: TextStyle(color: AppColors.textSecondary, fontWeight: FontWeight.w600),
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -63,9 +71,10 @@ class ProfileScreen extends StatelessWidget {
     final user = authService.currentUser;
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
               // Top Title
@@ -75,27 +84,24 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.textPrimary,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 24),
 
-              // Royal User Avatar Card
+              // Royal User Avatar Card (iOS Blue Card)
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(22),
                 decoration: BoxDecoration(
                   gradient: AppColors.cardGradient,
                   borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.15),
-                    width: 1,
-                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primaryPurple.withOpacity(0.3),
+                      color: AppColors.iosBlue.withOpacity(0.3),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -112,10 +118,15 @@ class ProfileScreen extends StatelessWidget {
                           height: 80,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF8B5CF6), Color(0xFF06B6D4)],
-                            ),
+                            color: Colors.white,
                             border: Border.all(color: Colors.white, width: 3),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.12),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
                           child: const Center(
                             child: Text(
@@ -131,9 +142,9 @@ class ProfileScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
-                            Icons.check,
+                            CupertinoIcons.checkmark_alt,
                             color: Colors.white,
-                            size: 14,
+                            size: 13,
                           ),
                         ),
                       ],
@@ -146,8 +157,9 @@ class ProfileScreen extends StatelessWidget {
                       user?.name ?? 'Yang Mulia',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 19,
                         fontWeight: FontWeight.w800,
+                        letterSpacing: -0.3,
                       ),
                     ),
 
@@ -157,12 +169,12 @@ class ProfileScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.mail_outline_rounded, color: AppColors.neonCyan, size: 18),
+                        const Icon(CupertinoIcons.mail_solid, color: Colors.white70, size: 16),
                         const SizedBox(width: 6),
                         Text(
                           user?.email ?? 'pengguna@email.com',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withOpacity(0.85),
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),
@@ -173,15 +185,22 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Statistics Card
+              // Statistics Card (iOS White Grouped Card)
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.surfaceBorder),
+                  border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 12,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -189,53 +208,60 @@ class ProfileScreen extends StatelessWidget {
                     _buildStatItem(
                       label: 'Total Saldo',
                       value: CurrencyFormatter.formatCompact(txService.totalBalance),
-                      icon: Icons.account_balance_wallet_rounded,
+                      icon: CupertinoIcons.creditcard_fill,
                       color: AppColors.emeraldGreen,
                     ),
-                    Container(width: 1, height: 40, color: AppColors.surfaceBorder),
+                    Container(width: 0.8, height: 38, color: AppColors.surfaceBorder),
                     _buildStatItem(
                       label: 'Transaksi',
                       value: '${txService.transactions.length}',
-                      icon: Icons.receipt_long_rounded,
-                      color: AppColors.neonCyan,
+                      icon: CupertinoIcons.doc_plaintext,
+                      color: AppColors.iosBlue,
                     ),
-                    Container(width: 1, height: 40, color: AppColors.surfaceBorder),
+                    Container(width: 0.8, height: 38, color: AppColors.surfaceBorder),
                     _buildStatItem(
                       label: 'Status DB',
                       value: SupabaseConfig.isConfigured ? 'Tersambung' : 'Lokal (Siap)',
-                      icon: Icons.cloud_done_rounded,
-                      color: AppColors.primaryPurplePastel,
+                      icon: CupertinoIcons.cloud_fill,
+                      color: AppColors.iosBlue,
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
-              // Information Card
+              // Information Card (iOS Grouped List)
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.surfaceBorder),
+                  border: Border.all(color: AppColors.surfaceBorder, width: 0.8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 12,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
                     _buildInfoRow(
-                      icon: Icons.info_outline_rounded,
+                      icon: CupertinoIcons.info_circle_fill,
                       title: 'Versi Aplikasi',
-                      subtitle: 'Cashifly v1.0.0 (Release)',
+                      subtitle: 'Cashifly v1.0.0 (Release iOS Look)',
                     ),
-                    const Divider(color: AppColors.surfaceBorder, height: 20),
+                    const Divider(color: AppColors.surfaceBorder, height: 20, thickness: 0.8),
                     _buildInfoRow(
                       icon: Icons.storage_rounded,
                       title: 'Backend Database',
-                      subtitle: 'Supabase PostgreSQL (Siap dihubungkan)',
+                      subtitle: 'Supabase PostgreSQL (Aktif)',
                     ),
-                    const Divider(color: AppColors.surfaceBorder, height: 20),
+                    const Divider(color: AppColors.surfaceBorder, height: 20, thickness: 0.8),
                     _buildInfoRow(
-                      icon: Icons.security_rounded,
+                      icon: CupertinoIcons.lock_shield_fill,
                       title: 'Metode Identitas',
                       subtitle: 'Email & Kata Sandi (Supabase Auth)',
                     ),
@@ -243,32 +269,32 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 36),
+              const SizedBox(height: 30),
 
-              // Tombol Keluar (Requested feature)
+              // Tombol Keluar (iOS Destructive Button)
               SizedBox(
                 width: double.infinity,
                 height: 52,
                 child: OutlinedButton(
                   onPressed: () => _showLogoutDialog(context, authService),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: AppColors.rosePink, width: 1.5),
+                    side: const BorderSide(color: AppColors.rosePink, width: 1.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    backgroundColor: AppColors.rosePink.withOpacity(0.08),
+                    backgroundColor: AppColors.rosePink.withOpacity(0.06),
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.logout_rounded, color: AppColors.rosePink, size: 20),
+                      Icon(CupertinoIcons.square_arrow_right, color: AppColors.rosePink, size: 20),
                       SizedBox(width: 10),
                       Text(
                         'Keluar dari Akun',
                         style: TextStyle(
                           color: AppColors.rosePink,
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -297,15 +323,16 @@ class ProfileScreen extends StatelessWidget {
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 15,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
         ),
         const SizedBox(height: 2),
         Text(
           label,
           style: const TextStyle(
-            color: AppColors.textMuted,
+            color: AppColors.textSecondary,
             fontSize: 11,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -322,10 +349,10 @@ class ProfileScreen extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppColors.surfaceElevated,
+            color: AppColors.iosBlueLight,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(icon, color: AppColors.primaryPurplePastel, size: 18),
+          child: Icon(icon, color: AppColors.iosBlue, size: 18),
         ),
         const SizedBox(width: 14),
         Expanded(
@@ -336,7 +363,7 @@ class ProfileScreen extends StatelessWidget {
                 title,
                 style: const TextStyle(
                   color: AppColors.textPrimary,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -344,7 +371,7 @@ class ProfileScreen extends StatelessWidget {
               Text(
                 subtitle,
                 style: const TextStyle(
-                  color: AppColors.textMuted,
+                  color: AppColors.textSecondary,
                   fontSize: 11,
                 ),
               ),
@@ -355,4 +382,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
